@@ -36,8 +36,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Publish only the dashboard. The repo root has no index.html, so
+          # uploading '.' would deploy a site that 404s. docs/ holds the
+          # self-contained dashboard (index.html + css + js + data.js).
+          path: './docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
