@@ -4,6 +4,9 @@ A brute-force MPC controller for a single naturally flowing oil well's
 production choke, built for the Honeywell hackathon challenge
 *"Autonomous Production Choke Controller for a Single Naturally Flowing Oil Well."*
 
+**🔗 Live dashboard:** https://ayush1deshmukh.github.io/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well/
+**💻 Repository:** https://github.com/Ayush1Deshmukh/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well
+
 > **No official simulator file was provided** despite the problem statement
 > indicating one would be. `src/well_simulator.py` is a physics-based
 > stand-in built from the process description, exposing the exact interface

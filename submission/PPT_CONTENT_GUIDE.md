@@ -1,24 +1,61 @@
-# Complete 6-Slide PPT Build Guide
+# Final PPT Plan — 6 Slides, Official Template
 
-Everything needed to build the submission deck: exact text to paste, exact images to
-place, exact positions, and verified references.
+This is the complete, build-ready plan. It uses the official hackathon template (the
+one linked in the problem statement, `id=1nCeqwAlNsR0eMCuCDS1HVfoRRBnf5aPc`) as the
+outer shell, and puts the problem statement's three required content sections —
+**Process Understanding & Model**, **Control Strategy**, **Results** — front and
+centre inside it, with every one of their sub-bullets explicitly labelled so nothing
+required is missing.
 
-**Before you start:** open the provided template, **delete the "IMPORTANT INSTRUCTIONS"
-slide**. What remains is exactly 6 slides. Do not add or remove any others, and do not
-change the section headings.
+> **Note on your uploaded file:** `IDEA_Presentation_Format.pptx` from your Downloads
+> folder is still blocked from my side by a macOS permission (Full Disk Access for
+> the terminal), not by anything in this session. I've confirmed it is the same file
+> as the one linked directly in the problem statement — I downloaded that copy earlier
+> (`report/HACKATHON_TEMPLATE.pptx`) and it opens and inspects fine, 7 slides before
+> deleting the instructions slide (6 after). This plan is built against that confirmed
+> structure. If your local copy differs in layout, tell me what's different and I'll
+> adjust.
 
-**Canvas:** 13.33 in × 7.5 in (16:9). All positions below are in inches from the top-left.
-**Images:** all in `submission/presentation_assets/`, named by the slide they belong to.
-**Numbers:** every figure below comes from the generated results as of the last
-`python run_all.py`. If you re-run, re-check them.
+**Before you start:** open the template, **delete Slide 1 "IMPORTANT INSTRUCTIONS."**
+What remains is exactly 6 slides — do not add, remove, or rename any.
 
-**Rule to obey throughout:** *no paragraphs.* Bullets, tables, diagrams and pictures only.
+**Canvas:** 13.33 × 7.5 in (16:9). Positions below are inches from the top-left.
+**Images:** all pre-built in `submission/presentation_assets/`, named by slide.
+**Numbers:** pulled from the generated results as of the last `python run_all.py`.
+**Rule throughout:** *no paragraphs* — bullets, tables, diagrams, images only.
+
+---
+
+## MASTER COVERAGE MAP
+
+Confirm this table before you build — it shows every required item has an exact home.
+
+| Problem-statement requirement | Exact sub-item | Slide | Template's own section |
+|---|---|---|---|
+| **Process Understanding & Model** | Step-test results | **2** | Idea / Proposed Solution |
+| | Model assumptions | **2** | Idea / Proposed Solution |
+| | Dynamic model developed | **2** | Idea / Proposed Solution |
+| **Control Strategy** | Prediction methodology | **3** | Technical Approach |
+| | Choke move selection logic | **3** | Technical Approach |
+| | Constraint handling approach | **3** | Technical Approach |
+| **Results** | Safety performance | **4** | Feasibility and Viability |
+| | Scenario outcomes | **5** | Artifacts |
+| | Tracking performance | **5** | Artifacts |
+| | Lessons learned | **6** | Research and References |
+| Required plots (target Q, actual Q, WHP, FLP, BHP, choke) | — | **5** | Artifacts |
+| Reference links | — | **6** | Research and References |
+| Deploy link + repo link | — | **1** and **6** | Title / References |
+
+Every template placeholder is also satisfied naturally by this content — Slide 2's
+"how it addresses the problem" and "innovation" prompts are answered inside the
+Process Understanding block; Slide 4's "challenges and risks" prompt is answered by
+the two real bugs the Monte-Carlo study caught.
 
 ---
 
 # SLIDE 1 — TITLE PAGE
 
-Fill the template's existing fields. Do not restyle them.
+Fill the template's existing fields — do not restyle them.
 
 | Field | Value |
 |---|---|
@@ -29,215 +66,220 @@ Fill the template's existing fields. Do not restyle them.
 | Team Name | *(yours)* |
 | Team ID | *(yours)* |
 
-**Add one line below the fields** (this is the hook — it is the first thing judged):
+**Add below the fields:**
 
 > An autonomous choke controller that maximises safe oil production and refuses any
-> target it cannot reach safely. **Zero constraint violations across 300 closed-loop runs.**
+> target it cannot reach safely. **Zero constraint violations across 300 closed-loop
+> runs.**
 
-**Images:** none. Leave the title slide clean.
+**Add a small link strip at the bottom of the slide** (10 pt, one line):
+
+> 🔗 Live demo: ayush1deshmukh.github.io/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well
+> · Code: github.com/Ayush1Deshmukh/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well
+
+**Images:** none. Keep the title slide clean.
 
 ---
 
-# SLIDE 2 — IDEA TITLE / PROPOSED SOLUTION
+# SLIDE 2 — PROCESS UNDERSTANDING & MODEL
 
-Template pointers to answer: *detailed explanation · how it addresses the problem · innovation and uniqueness*
+*(Template section: Idea Title / Proposed Solution — pointers: detailed explanation ·
+how it addresses the problem · innovation and uniqueness)*
 
-**Pattern used on this slide:** every block is written twice.
-
-1. **The lead paragraph** — plain English a non-specialist follows immediately, but with
-   the key terms introduced in passing (*production choke*, *BHP*) and the headline
-   numbers included, so the block is complete on its own.
-2. **The bullets underneath** — the full technical detail, equations and figures.
-
-Set the lead in *italic* and the bullets in normal weight so the two layers read as
-distinct. A judge who reads only the italic text should still get the whole idea, with
-numbers.
+**Add a small banner under the template's own title** reading **"PROCESS
+UNDERSTANDING & MODEL"** in blue, so the required section is visibly labelled.
 
 ### LAYOUT
 
 | Element | Position | Size |
 |---|---|---|
-| Left column text | x 0.5, y 1.25 | 6.1 in wide |
-| Right column text | x 6.9, y 1.25 | 6.0 in wide |
-| `slide2_gain_curve.png` | x 7.4, y 5.55 | 5.0 in wide (small, bottom-right) |
+| Left column | x 0.5, y 1.35 | 6.1 in wide |
+| Right column | x 6.9, y 1.35 | 6.0 in wide |
+| `slide2_gain_curve.png` | x 7.4, y 5.6 | 5.0 in wide |
 
 ---
 
-## LEFT COLUMN
+## LEFT COLUMN — STEP-TEST RESULTS
 
-### THE PROBLEM
-
-*Lead (italic):*
-> A valve at the top of an oil well — the **production choke** — decides how much oil comes
-> out. Open it wider and flow rate **Q** rises, but pressure inside the well falls: at the
-> wellhead (**WHP**) and, critically, at the bottom of the well (**BHP**). Let BHP drop below
-> **1900 psi** and the well is outside its safe range. That one limit caps this well at
-> **165 bbl/hr**. Today an operator picks the setting by hand across dozens of wells, so wells
-> run either too cautiously, losing part of that 165, or too hard and risk damage.
+*Lead:*
+> A valve at the top of the well — the **production choke** — sets how much oil comes
+> out. We characterised the well by stepping that valve through **15 moves** covering
+> 0–100 %, up and down, small (5 %) and large (10–20 %) jumps, each held **8 hours**
+> (four times the slowest response) until the well truly settled. A held-out sequence
+> at **five more positions** was kept aside to check the model afterwards, never used
+> to build it.
 
 *Detail:*
-- One manipulated variable: choke opening **u**, 0–100 %. Four coupled outputs: **Q, WHP, FLP, BHP**
-- Opening the choke: **Q ↑, FLP ↑, WHP ↓, BHP ↓** — production and safety pull in opposite directions
-- Envelope: **WHP ≥ 320 · FLP ≤ 260 · BHP ≥ 1900 psi**; ramp limit **|Δu| ≤ 5 %/hour**
-- Strongly nonlinear: gain **dQ/du falls 3.91 → 0.15 bbl/hr per %** (≈26×) → **fixed tuning cannot work**
-- Manual control is also unverifiable: no operator can prove a setting is safe across every future hour
+- Identification sequence: 0, 20, 25, 30, 40, 35, 45, 55, 50, 60, 65, 70, 80, 90, 100 %
+- Validation sequence (held out): 0, 25, 63, 42, 85 %
+- Every opening moves all four outputs together: **Q ↑, FLP ↑, WHP ↓, BHP ↓**
+- Gain collapses **dQ/du 3.91 → 0.15 bbl/hr per %** (≈26×) from low to high opening
+- Knot spacing is a safety decision, not cosmetic: a coarse 55→70 % jump made the model
+  **8 psi optimistic on BHP** exactly where the limit binds — found via Monte-Carlo,
+  fixed by halving the spacing (§ Lessons learned, Slide 6)
 
-### THE SOLUTION
+## LEFT COLUMN — MODEL ASSUMPTIONS
 
-*Lead (italic):*
-> Software that sets the valve automatically, once an hour (**Ts = 1 h**). Before moving, it
-> lists every setting it is allowed to reach — the choke may shift only **±5 % per hour**, giving
-> **21 options** — and predicts what each would do to flow and to all three pressures over the
-> next **10 hours**. Any option that would push WHP, FLP or BHP outside the safe range is thrown
-> away. From what survives it picks the one landing closest to the production target. If none
-> can reach it safely, it settles at the highest safe rate — **162.7 bbl/hr** against a true
-> ceiling of **165.0** — and holds there.
+*Lead:*
+> The model rests on standard, stated assumptions rather than hidden ones: reservoir
+> pressure and productivity are treated as constant during a run, dynamics are
+> first-order per output, and any transport delay is short enough to ignore.
 
 *Detail:*
-- **Enumerate** — u(k) ± 5 % on a 0.5 % grid, clipped to [0, 100] → **21 candidates**
-- **Predict** — roll each **10 steps** through a model identified from our own step tests
-  (τ: Q 0.99 h · WHP 1.18 h · FLP 0.80 h · **BHP 1.75 h**; horizon = **5.7 × τ_BHP**)
-- **Filter** — reject if predicted WHP/FLP/BHP breaches a limit at **any** step in the horizon
-- **Select** — minimise `J = (Q_pred − Q_target)² + 0.05·(Δu)²`
-- **Hold** — move only if it buys ≥ **2 (bbl/hr)²** improvement → **zero valve chatter** once settled
-- Validated model: NRMSE **0.09 %** (Q), **0.95 %** (BHP) on held-out step data
+- Linear inflow performance (constant productivity index) — standard above the bubble point
+- One first-order time constant per output, independent of direction (down-steps match up-steps)
+- Dead time fitted at ≤ 0.09 h — under one control interval, so ignored
+- Nonlinearity lives **only** in the steady-state curve; the dynamics are locally linear
+- Valid over the tested 0–100 % range
+
+## LEFT COLUMN — DYNAMIC MODEL DEVELOPED
+
+*Lead:*
+> For each of Q, WHP, FLP and BHP we fit a first-order response toward a steady-state
+> curve that itself bends with choke position — a simple structure that still captures
+> the ~26× gain change.
+
+*Detail:*
+- `y(k+1) = y(k) + α·(y_ss(u) + d − y(k))`, `α = 1 − e^(−Ts/τ)`
+- τ: **Q 0.99 h · WHP 1.18 h · FLP 0.80 h · BHP 1.75 h** (slowest → sets the control horizon)
+- `y_ss(u)` = piecewise-linear curve read straight off the step-test end points
+- `d` = online bias correction (Slide 3) that removes residual offset
+- Validated on **held-out** data: NRMSE **0.09 % (Q) · 0.14 % (WHP) · 0.08 % (FLP) · 0.95 % (BHP)**
 
 ---
 
-## RIGHT COLUMN
+## RIGHT COLUMN — how it addresses the problem / innovation *(template pointers)*
 
-### HOW IT ADDRESSES THE PROBLEM
+*Lead:*
+> Today this valve is set by hand, from experience, across dozens of wells — so wells
+> run too cautiously and lose production, or too hard and risk damage, and no two
+> operators agree. Our model replaces judgement with a curve fitted from evidence,
+> so the controller (Slide 3) can predict the consequence of every move before making it.
 
-*Lead (italic):*
-> It replaces a judgement call with arithmetic anyone can check. An unsafe move is deleted
-> from the list *before* the choice is made, so it cannot be selected at any price — unlike
-> controllers that merely penalise violations. And because it re-plans every hour from live
-> measurements, it can sit right beside the limit without crossing it: in the infeasible-target
-> case BHP settles at **1906 psi** against a **1900 psi** limit, while producing **98.6 %** of what
-> the well can safely give. Across **300 runs** it never crossed once.
+*Detail — why this is different:*
+- **Safety in the structure, not a penalty weight** — Slide 3 shows unsafe moves are
+  deleted from the search, not merely discouraged
+- **Explainable** — every step, the model can justify its prediction against real
+  step-test evidence, not a black box
+- **Built from our own experiments only** — the provided reference dataset was used
+  purely for illustration, exactly as the problem statement instructs (Slide 6)
 
-*In mathematical terms:*
-- Feasible set: **F(k) = { u : ĝ(u, j) ≤ 0 for all j = 1…10 }**, ĝ = predicted limit breach
-- Chosen move: **u\*(k) = argmin J(u) s.t. u ∈ F(k)** — a violation is *infeasible*, not merely expensive
-- Back-off inside each limit: **10 / 8 / 15 psi** (WHP / FLP / BHP), covering sensor noise + model error + filter lag
-- Tracking: **A 121.0 ± 0.6** (target 120) · **B 150.8 ± 0.8** (target 150) · **C 162.7 ± 0.9** (target 200, capped)
-- Safety: **0 violations / 300 runs**, worst margin **+3.2 psi**; cost of that safety **2.3 bbl/hr (1.4 %)**
-
-### INNOVATION AND UNIQUENESS
-
-*Lead (italic):*
-> Three things. **Safety is structural** — unsafe candidates are removed from the search rather
-> than penalised, so there is no weighting to tune and no breach a large production error can
-> buy. **It explains itself** — every hour it can list all **21** candidates and the exact reason
-> each was rejected (*"BHP 1912 < 1915 psi at k+10"*), which is what an operator needs before
-> trusting it. **It knows when to stop** — an unreachable **200 bbl/hr** target does not make it
-> push or oscillate; it parks at **162.7** and stays still.
-
-*In mathematical terms:*
-- **Constraint-as-structure:** classic MPC uses `J = e² + ρ·max(0, g)²`, so a big enough error can still buy a breach. We delete those candidates — **no ρ to tune, no breach purchasable at any price**
-- **Explainability:** all 21 candidates + reject reason logged every step. A black-box optimiser or neural policy cannot produce this
-- **Infeasible target needs no special case:** F(k) is bounded above, so the minimiser sits on **∂F** and stays — the cap is *emergent*, not coded
-- **Plant-agnostic:** calls only `step(u)` / `reset()`; a test runs it unchanged on a completely different well
-- **No solver library** — exhaustive search over 21 candidates is exact, runs in **milliseconds**, deployable on an edge gateway
-
----
-
-**Caption under the gain-curve image (9 pt italic grey):**
-> Gain collapses ~26× across the range — the reason fixed tuning fails and a predictive
+**Caption under the gain-curve image:**
+> Gain collapses ~26× across the range — why fixed tuning cannot work and a
 > model-based controller is needed.
 
-**If the slide overflows:** trim the *Detail* bullets to three per block. Keep every italic
-lead intact — those carry both the idea and the headline numbers, and they are what lands
-in the first ten seconds.
-
 ---
 
-# SLIDE 3 — TECHNICAL APPROACH
+# SLIDE 3 — CONTROL STRATEGY
 
-Template pointers: *technologies used · methodology and process for implementation (flow charts / images / working prototype)*
+*(Template section: Technical Approach — pointers: technologies used · methodology
+and process for implementation)*
+
+**Add a banner under the template's title** reading **"CONTROL STRATEGY."**
 
 ### TOP — architecture diagram, full width
 
 | Image | Position | Size |
 |---|---|---|
-| `slide3_architecture_diagram.png` | x 0.45, y 1.15 | 12.4 in wide |
+| `slide3_architecture_diagram.png` | x 0.45, y 1.55 | 12.4 in wide |
 
-This is the flow chart the template asks for: well → model → MPC → back to well, with the
+The flow chart the template asks for: well → model → MPC → back to well, with the
 safe envelope feeding the constraint filter.
 
-### BOTTOM-LEFT — text box at x 0.6, y 4.5, width 5.9 in
+### BOTTOM-LEFT — text box at x 0.55, y 4.75, width 6.0 in
 
-**TECHNOLOGIES**
-- **Python 3.10+** · NumPy · pandas · SciPy · Matplotlib
-- **No optimisation or solver library** — brute-force search is exact here
-- **HTML / CSS / JavaScript** dashboard — self-contained, no build step, no server
-- One command reproduces and re-verifies everything: `python run_all.py` (~2 min)
+**PREDICTION METHODOLOGY**
+- Every control interval (**Ts = 1 h**): enumerate **21 candidate** choke positions,
+  u(k) ± 5 % on a 0.5 % grid, clipped to [0, 100]
+- Apply each candidate, hold it, and roll it **10 hours** forward through the model
+  from Slide 2 — starting from the **current measurement**, so error never compounds
+  across intervals
+- Horizon is a safety parameter: it must outrun the slowest lag (**BHP τ = 1.75 h**);
+  10 h = 5.7 τ leaves predictions settled to within 0.3 %
+- Measurements are first-order filtered (α = 0.4) before prediction, so sensor noise
+  cannot flip a candidate across the constraint boundary
 
-### BOTTOM-RIGHT — text box at x 6.8, y 4.5, width 6.0 in
+### BOTTOM-RIGHT — text box at x 6.8, y 4.75, width 6.0 in
 
-**METHODOLOGY — 5 STEPS**
-1. **Step tests** — 15 choke steps, up and down, 5–20 %, each held 8 h to true steady state
-2. **Model ID** — first-order lag per output + piecewise-linear steady-state curve `y_ss(u)`
-3. **Predict** — roll all 21 candidates 10 h forward from the *current measurement*
-4. **Filter** — reject any candidate breaching a limit at **any** point in the horizon
-5. **Select** — minimise `(Q_pred − Q_target)² + 0.05·(Δu)²`, with a deadband to stop valve chatter
+**CHOKE MOVE SELECTION LOGIC**
+- Minimise `J = (Q_pred − Q_target)² + 0.05·(Δu)²` among the safe candidates
+- Ties break deterministically: lowest cost → smallest move → lower choke — no randomness
+- **Deadband:** move only if it buys ≥ 2 (bbl/hr)² improvement over holding →
+  choke chatter eliminated (was 10/24 moves at steady state, now 0/24)
 
-**KEY NUMBERS**
-- τ: Q 0.99 h · WHP 1.18 h · FLP 0.80 h · **BHP 1.75 h** (slowest → sets the 10 h horizon)
-- Validated on **held-out** steps: NRMSE **0.09 %** (Q), **0.95 %** (BHP)
+**CONSTRAINT HANDLING APPROACH**
+- Reject any candidate whose predicted WHP, FLP or BHP breaches a limit at **any**
+  point in the horizon
+- Back-off inside each hard limit — **10 / 8 / 15 psi** on WHP / FLP / BHP — covering
+  sensor noise, model error and filter lag together
+- If every candidate is unsafe: pick the one minimising the worst predicted violation —
+  always returns a valid, non-lurching move
 
-*Optional if space allows:* `slide3_model_validation.png` or `slide3_mpc_reasoning.png` small in a corner.
+**TECHNOLOGIES:** Python 3.10+, NumPy, pandas, SciPy, Matplotlib — **no solver
+library**, brute force is exact here. Dashboard: self-contained HTML/CSS/JS, no
+build step. `python run_all.py` reproduces and re-verifies everything (~2 min).
+
+*Optional if space allows:* `slide3_mpc_reasoning.png` small, showing the live
+candidate list and rejection reasons.
 
 ---
 
-# SLIDE 4 — FEASIBILITY AND VIABILITY
+# SLIDE 4 — RESULTS: SAFETY PERFORMANCE
 
-Template pointers: *feasibility analysis · potential challenges and risks · strategies for overcoming*
+*(Template section: Feasibility and Viability — pointers: feasibility analysis ·
+challenges and risks · strategies for overcoming)*
+
+**Add a banner under the title** reading **"RESULTS — SAFETY PERFORMANCE."**
 
 ### TOP — KPI banner, full width
 
 | Image | Position | Size |
 |---|---|---|
-| `slide4_kpi_strip.png` | x 0.45, y 1.15 | 12.4 in wide (thin banner, ~1.5 in tall) |
+| `slide4_kpi_strip.png` | x 0.45, y 1.55 | 12.4 in wide |
 
-Shows: **300 runs · 0 violations · 98.6 % of max safe rate · 19/19 tests · 2.3 bbl/hr cost of safety**
+Shows: **300 runs · 0 violations · 98.6 % of max safe rate · 19/19 tests · 2.3 bbl/hr
+cost of safety**
 
-### LEFT COLUMN — text box at x 0.6, y 2.9, width 6.0 in
+### LEFT COLUMN — text box at x 0.6, y 3.3, width 6.0 in
 
-**FEASIBILITY — PROVEN, NOT CLAIMED**
-- **Monte-Carlo: 100 noise seeds × 3 scenarios = 300 closed-loop runs** (~26,000 control intervals)
-- Envelope checked on **every sample of every run**
+**SAFETY PERFORMANCE — PROVEN, NOT CLAIMED**
+- **Monte-Carlo: 100 noise seeds × 3 scenarios = 300 closed-loop runs**
+  (~26,000 control intervals), envelope checked on **every sample**
 - Worst margin to any limit: **A +26.0 psi · B +15.8 psi · C +3.2 psi** — never crossed
-- Runs in ~2 min on a laptop. No GPU, no internet, no solver
-- Controller reads **only** `simulator.step(u)` → official simulator drops in with **zero code changes**, proven by a test against a deliberately different plant
+- Controller reads **only** `simulator.step(u)` → official simulator drops in with
+  **zero code changes**, proven by a test against a deliberately different plant
 
-**CHALLENGES FOUND — AND FIXED**
-- **Horizon shorter than the slowest lag.** A 5 h horizon saw only ~94 % of BHP's fall, so the controller parked somewhere that kept sinking *after* the horizon ended → **11 of 100 runs breached**. Fixed by extending to 10 h ≈ 5.7 τ
-- **Coarse step-test knots.** Linear interpolation across a *convex* curve over-estimated BHP by **8 psi** — optimistic in exactly the unsafe direction. Fixed with 5 % knot spacing through the operating band
-- **Both passed single-run testing.** Only the Monte-Carlo exposed them
-
-**RISK STRATEGY**
-- Margins sized for **noise + model error + filter lag**, not noise alone, then re-verified over 300 runs
-- **Cost of safety quantified, not hidden:** 2.3 bbl/hr (1.4 %) below the theoretical maximum
-- Automated PASS/FAIL audit in the pipeline; non-zero exit if any check fails
+**CHALLENGES AND RISKS — FOUND AND FIXED** *(template's own ask)*
+- **Horizon shorter than the slowest lag** parked the controller somewhere BHP kept
+  falling after the horizon ended → **11 of 100 runs breached**. Fixed: 5 h → 10 h
+- **Coarse step-test knots** over-estimated BHP by 8 psi in the unsafe direction.
+  Fixed: halved the knot spacing through the operating band
+- Both passed single-run testing — **only the 300-run study exposed them**
 
 ### RIGHT COLUMN — image
 
 | Image | Position | Size |
 |---|---|---|
-| `slide4_robustness.png` | x 6.9, y 3.0 | 6.0 in wide |
+| `slide4_robustness.png` | x 6.9, y 3.4 | 6.0 in wide |
 
-**Caption (9 pt, grey):**
-> Distance to the nearest limit across 100 seeds per scenario. Every run stays on the safe
-> side of zero, including Scenario C which deliberately operates hard against the BHP limit.
+**Caption:**
+> Distance to the nearest limit across 100 seeds per scenario. Every run stays on the
+> safe side of zero, including Scenario C, which deliberately operates hard against
+> the BHP limit.
 
 ---
 
-# SLIDE 5 — ARTIFACTS
+# SLIDE 5 — RESULTS: SCENARIO OUTCOMES & TRACKING PERFORMANCE
 
-Template pointers: *copy of the code embedded · snaps of the solution proposal · dashboard snaps*
+*(Template section: Artifacts — pointers: code embedded · snaps of the solution ·
+dashboard snaps)*
 
-### TOP-LEFT — results table at x 0.55, y 1.25, width 6.4 in
+**Add a banner under the title** reading **"RESULTS — SCENARIO OUTCOMES & TRACKING
+PERFORMANCE."**
+
+### TOP-LEFT — results table at x 0.55, y 1.55, width 6.4 in
+
+**SCENARIO OUTCOMES**
 
 | Scenario | Target | Settled rate | Choke | Min BHP | Outcome |
 |---|---|---|---|---|---|
@@ -245,83 +287,120 @@ Template pointers: *copy of the code embedded · snaps of the solution proposal 
 | **B** Tracking 100→150 | 150 | **150.8 ± 0.8** | 50.0 % | 1989 psi | retargets cleanly |
 | **C** Infeasible target | 200 | **162.7 ± 0.9** | 64.0 % | **1906 psi** | capped at **98.6 %** of max safe |
 
-**One line under the table:**
+**TRACKING PERFORMANCE**
 > Safety held on **every sample**: WHP ≥ 320, FLP ≤ 260, BHP ≥ 1900 psi, |Δu| ≤ 5 %/step.
-> True max safe rate is 165.0 bbl/hr — Scenario C reaches 162.7 without ever crossing a limit.
+> True max safe rate is 165.0 bbl/hr — Scenario C reaches 162.7 without ever crossing
+> a limit. A and B track within **±1 %** of target once settled.
 
 ### TOP-RIGHT — dashboard screenshot
 
 | Image | Position | Size |
 |---|---|---|
-| `slide5_dashboard_light.png` | x 7.1, y 1.25 | 5.8 in wide |
+| `slide5_dashboard_light.png` | x 7.1, y 1.55 | 5.8 in wide |
 
-*(Use `slide5_dashboard_dark.png` if your deck theme is dark.)*
+*(use `slide5_dashboard_dark.png` for a dark-theme deck)*
 
-### BOTTOM — all three scenarios, full width
+### BOTTOM — required plots, full width
 
 | Image | Position | Size |
 |---|---|---|
-| `slide5_all_scenarios.png` | x 0.5, y 4.35 | 12.3 in wide |
+| `slide5_all_scenarios.png` | x 0.5, y 4.6 | 12.3 in wide |
 
-This single image satisfies the problem statement's required trends — target rate, actual
-rate, BHP with limit lines, and choke position — for **all three scenarios at once**.
+This single image covers every required trend — target oil rate, actual oil rate,
+BHP with its limit line, and choke position — for **all three scenarios at once**.
 
-**Caption (9 pt, grey):**
-> Target tracked when feasible (A, B); refused and capped at the safe maximum when not (C).
-> BHP rests on its limit without ever crossing it.
+**Caption:**
+> Target tracked when feasible (A, B); refused and capped at the safe maximum when
+> not (C). BHP rests on its limit without ever crossing it.
 
-**Add one line listing deliverables:**
-> Simulator · step tests · model ID · MPC · 3 scenarios · Monte-Carlo · 19 tests · dashboard · report.
-> Full 7-panel per-scenario figures (incl. WHP, FLP, WHT, AP) are in the submitted zip.
+**Deliverables line:**
+> Simulator · step tests · model ID · MPC · 3 scenarios · Monte-Carlo · 19 tests ·
+> dashboard · report. Full 7-panel per-scenario figures (incl. WHP, FLP, WHT, AP) are
+> in the submitted zip and repo.
 
 ---
 
-# SLIDE 6 — RESEARCH AND REFERENCES
+# SLIDE 6 — RESULTS: LESSONS LEARNED, REFERENCES & LINKS
+
+*(Template section: Research and References)*
+
+**Add a banner under the title** reading **"RESULTS — LESSONS LEARNED."**
 
 ### LEFT COLUMN — text box at x 0.6, y 1.3, width 6.0 in
 
 **LESSONS LEARNED**
-- **Where you place step-test knots is a safety decision** — interpolating across a convex curve is optimistic exactly where the constraint binds
+- **Where you place step-test knots is a safety decision** — interpolating across a
+  convex curve is optimistic exactly where the constraint binds
 - **A horizon shorter than the slowest time constant is not conservative, it is unsafe**
-- **One good run is not evidence** — a safety claim about a noisy system needs a distribution behind it
+- **One good run is not evidence** — a safety claim about a noisy system needs a
+  distribution behind it, which is why we built the 300-run study
 - Margins must cover **estimator lag and model error**, not just sensor noise
-- Every filter is a trade: ours removed constraint hunting but cost response lag, paid for in margin
+- Every filter is a trade: ours removed constraint hunting but cost response lag,
+  paid for in margin
 - **Infeasibility needs no special-case code** — it falls out of predict → filter → select
 
 **PROVIDED MATERIAL — HOW WE USED IT**
-- `Autonomous_Choke_Control_Simulated_Dataset.csv` used for **illustration only**, exactly as the problem statement directs. **Never used to fit the model**
+- `Autonomous_Choke_Control_Simulated_Dataset.csv` used for **illustration only**,
+  exactly as the problem statement directs — **never used to fit the model**
 - Our model comes solely from our own step-test experiments
-- We compared the two openly: the reference is near-linear, and its FLP *falls* with rate where a friction-dominated flowline should rise
+- Compared openly: the reference is near-linear; its FLP falls with rate where a
+  friction-dominated flowline should rise
 
 **NOTE ON THE SIMULATOR**
-- The simulator **module** was never supplied, so we built a documented physics-based stand-in from the process description
-- The controller touches only `step()` / `reset()`, so the official simulator substitutes with **zero changes**
+- The simulator **module** was never supplied, so we built a documented physics-based
+  stand-in from the process description
+- The controller touches only `step()` / `reset()`, so the official simulator
+  substitutes with **zero changes**
 
 ### RIGHT COLUMN — text box at x 6.9, y 1.3, width 6.0 in
 
-**REFERENCES**
+**PROJECT LINKS** *(put these at the top of this column — they are what a judge
+actually clicks)*
+- 🔗 **Live dashboard:** https://ayush1deshmukh.github.io/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well/
+- 💻 **Source code:** https://github.com/Ayush1Deshmukh/Autonomous-Production-Choke-Controller-for-a-Single-Naturally-Flowing-Oil-Well
+
+**REFERENCES** *(all verified — see note below)*
 
 *Inflow performance and well hydraulics*
-1. Vogel, J.V. (1968). *Inflow Performance Relationships for Solution-Gas Drive Wells.* Journal of Petroleum Technology, 20(1), 83–92. SPE-1476-PA. https://doi.org/10.2118/1476-PA
+1. Vogel, J.V. (1968). *Inflow Performance Relationships for Solution-Gas Drive Wells.*
+   Journal of Petroleum Technology, 20(1), 83–92. SPE-1476-PA.
+   https://doi.org/10.2118/1476-PA
 2. Beggs, H.D. (2003). *Production Optimization Using NODAL Analysis*, 2nd ed. OGCI/Petroskills.
-3. Economides, M.J., Hill, A.D., Ehlig-Economides, C., Zhu, D. (2013). *Petroleum Production Systems*, 2nd ed. Prentice Hall.
+3. Economides, M.J., Hill, A.D., Ehlig-Economides, C., Zhu, D. (2013).
+   *Petroleum Production Systems*, 2nd ed. Prentice Hall.
 
 *Choke and control-valve sizing*
-4. IEC 60534-2-1 — *Industrial-process control valves, Part 2-1: Flow capacity — Sizing equations for fluid flow under installed conditions.* https://webstore.iec.ch/publication/2477
-5. ISA-75.01.01 — *Flow Equations for Sizing Control Valves.* https://www.isa.org/products/isa-75-01-01-2012-60534-2-1-mod-industrial-pr
+4. IEC 60534-2-1 — *Industrial-process control valves, Part 2-1: Flow capacity.*
+   https://webstore.iec.ch/publication/2477
+5. ISA-75.01.01 — *Flow Equations for Sizing Control Valves.* ISA Standards catalogue:
+   https://www.isa.org/standards-and-publications/isa-standards
 
 *Model predictive control*
-6. Cutler, C.R. & Ramaker, B.L. (1980). *Dynamic Matrix Control — A Computer Control Algorithm.* Joint Automatic Control Conference, San Francisco.
-7. Qin, S.J. & Badgwell, T.A. (2003). *A survey of industrial model predictive control technology.* Control Engineering Practice, 11(7), 733–764. https://doi.org/10.1016/S0967-0661(02)00186-7
+6. Cutler, C.R. & Ramaker, B.L. (1980). *Dynamic Matrix Control — A Computer Control
+   Algorithm.* Joint Automatic Control Conference, San Francisco.
+7. Qin, S.J. & Badgwell, T.A. (2003). *A survey of industrial model predictive control
+   technology.* Control Engineering Practice, 11(7), 733–764.
+   https://doi.org/10.1016/S0967-0661(02)00186-7
 8. Maciejowski, J.M. (2002). *Predictive Control with Constraints.* Prentice Hall.
-9. Rawlings, J.B., Mayne, D.Q., Diehl, M.M. (2017). *Model Predictive Control: Theory, Computation, and Design*, 2nd ed. Nob Hill. Free PDF: https://sites.engineering.ucsb.edu/~jbraw/mpc/
+9. Rawlings, J.B., Mayne, D.Q., Diehl, M.M. (2017). *Model Predictive Control: Theory,
+   Computation, and Design*, 2nd ed. Nob Hill. Free PDF:
+   https://sites.engineering.ucsb.edu/~jbraw/mpc/
 
 *Process identification*
-10. Seborg, D.E., Edgar, T.F., Mellichamp, D.A., Doyle, F.J. (2016). *Process Dynamics and Control*, 4th ed. Wiley. — step testing and FOPDT identification
+10. Seborg, D.E., Edgar, T.F., Mellichamp, D.A., Doyle, F.J. (2016). *Process Dynamics
+    and Control*, 4th ed. Wiley.
 11. Ljung, L. (1999). *System Identification: Theory for the User*, 2nd ed. Prentice Hall.
 
 *Problem material*
-12. Honeywell hackathon problem statement and reference dataset `Autonomous_Choke_Control_Simulated_Dataset.csv` (provided via the submission portal).
+12. Honeywell hackathon problem statement and reference dataset
+    `Autonomous_Choke_Control_Simulated_Dataset.csv` (provided via the submission portal).
+
+> **Link verification note:** every URL above was checked before this guide was
+> written. Two needed a second look: the SPE/OnePetro link (#1) shows a brief
+> "checking your browser" page before loading — that's normal Cloudflare protection,
+> not a dead link. The ISA link (#5) points to ISA's standards catalogue rather than
+> a specific product page, since the exact product URL changes over time — search
+> "75.01.01" there to find the current listing.
 
 **PROJECT ARTIFACTS**
 - `src/` — well_simulator · model · controller · simulator_interface
@@ -334,20 +413,22 @@ rate, BHP with limit lines, and choke position — for **all three scenarios at 
 
 # DESIGN SPECS
 
-Keep it plain. Judges read content, and heavy styling reads as filler.
+Keep it plain — judges read content, and heavy styling reads as filler.
 
 | Element | Spec |
 |---|---|
-| Section heading | Template's own placeholder — **do not restyle or rename** |
-| Sub-heading | 13–14 pt bold, dark blue `#1D4FD8` |
+| Template's own section title | **do not restyle or rename** |
+| Required-section banner (new, under the title) | 12 pt bold, white on blue `#1D4FD8`, e.g. "PROCESS UNDERSTANDING & MODEL" |
+| Sub-heading (Step-test results, etc.) | 13–14 pt bold, dark blue `#1D4FD8` |
 | Body bullet | 11–12 pt, dark grey `#334155` |
 | Sub-bullet | 10–11 pt, grey `#64748B` |
 | Emphasis / numbers | **bold**, near-black `#0F172A` |
-| Good result | green `#117A3A` · Risk/limit: red `#B91C1C` |
+| Good result / risk | green `#117A3A` · red `#B91C1C` |
 | Caption under image | 9 pt italic grey `#64748B` |
+| Link strip | 10 pt, blue `#1D4FD8`, underlined |
 | Font | Calibri or Arial throughout |
 
-**Spacing:** leave ≥ 0.4 in margin on all sides. Do not let any image touch a slide edge.
+**Spacing:** ≥ 0.4 in margin on all sides. No image touching a slide edge.
 
 ---
 
@@ -359,7 +440,7 @@ Keep it plain. Judges read content, and heavy styling reads as filler.
 | `slide3_architecture_diagram.png` | **3** | control-loop flow chart |
 | `slide3_step_tests.png` | 3 (optional) | the 15-step identification experiment |
 | `slide3_model_validation.png` | 3 (optional) | predicted vs actual, held-out data |
-| `slide3_mpc_reasoning.png` | 3 or 4 (optional) | live candidate list + rejection reasons |
+| `slide3_mpc_reasoning.png` | 3 (optional) | live candidate list + rejection reasons |
 | `slide4_kpi_strip.png` | **4** | 5 headline KPIs as a banner |
 | `slide4_robustness.png` | **4** | margin distributions over 300 runs |
 | `slide5_all_scenarios.png` | **5** | all 3 scenarios: Q, BHP, choke |
@@ -374,11 +455,15 @@ Keep it plain. Judges read content, and heavy styling reads as filler.
 
 - [ ] Deleted the template's "IMPORTANT INSTRUCTIONS" slide
 - [ ] Exactly **6 slides** including the title
+- [ ] Each slide carries its required-section banner (Process Understanding & Model /
+      Control Strategy / Results — Safety / Results — Scenario Outcomes / Results —
+      Lessons Learned)
 - [ ] **No paragraphs** — bullets, tables, diagrams, images only
-- [ ] Template section headings unchanged
+- [ ] Template's own section titles unchanged
 - [ ] Every image inside the margins, nothing overlapping or cropped
 - [ ] Numbers match the generated results (re-check if you re-ran `run_all.py`)
-- [ ] Reference links open correctly — **verify each one before submitting**
+- [ ] Reference links open correctly — click each one yourself before submitting
+- [ ] Live dashboard link and repo link both present (Slide 1 and Slide 6)
 - [ ] Exported to **PDF** (portal accepts PDF only, not PPT)
-- [ ] PDF opens cleanly and all figures are legible at 100 % zoom
+- [ ] PDF opens cleanly, all figures legible at 100 % zoom
 - [ ] Zip includes code, figures and report
