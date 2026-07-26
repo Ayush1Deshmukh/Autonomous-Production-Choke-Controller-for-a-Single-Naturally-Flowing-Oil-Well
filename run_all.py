@@ -36,6 +36,7 @@ STEPS = [
     ("Running the test suite", "tests/test_all.py"),
     ("Building the submission deck (optional)", "scripts/09_build_presentation.py"),
     ("Assembling presentation assets", "scripts/10_build_ppt_assets.py"),
+    ("Rendering source code to PDF (optional)", "scripts/11_code_to_pdf.py"),
 ]
 
 

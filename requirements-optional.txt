@@ -1,3 +1,4 @@
 playwright>=1.40  # optional, only for scripts/07_capture_dashboard.py
 reportlab>=4.0    # optional, only for scripts/08_export_report_pdf.py
 python-pptx>=0.6  # optional, only for scripts/09_build_presentation.py
+pygments>=2.15    # optional, only for scripts/11_code_to_pdf.py
