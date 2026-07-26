@@ -1,0 +1,47 @@
+{
+  "A": {
+    "name": "Scenario A - Startup to Target",
+    "pass": true,
+    "final_Q": 121.1382115859821,
+    "settled_Q": 120.9646283615918,
+    "settled_Q_std": 0.6177191441942883,
+    "final_target": 120.0,
+    "final_choke": 33.5,
+    "min_whp": 620.6094484527799,
+    "max_whp": 1455.802223264204,
+    "min_flp": 182.21921973323313,
+    "max_flp": 231.03079236589792,
+    "min_bhp": 2183.6212448677375,
+    "max_bhp": 2968.8373697906436
+  },
+  "B": {
+    "name": "Scenario B - Target Tracking",
+    "pass": true,
+    "final_Q": 149.29013859643368,
+    "settled_Q": 150.80269634072823,
+    "settled_Q_std": 0.8254831350981859,
+    "final_target": 150.0,
+    "final_choke": 50.0,
+    "min_whp": 427.8975307856003,
+    "max_whp": 1454.9369121615573,
+    "min_flp": 183.94027130599596,
+    "max_flp": 242.43285891448122,
+    "min_bhp": 1988.7083529409788,
+    "max_bhp": 2968.860213127605
+  },
+  "C": {
+    "name": "Scenario C - Infeasible Target",
+    "pass": true,
+    "final_Q": 164.812298095607,
+    "settled_Q": 162.65072903172995,
+    "settled_Q_std": 0.9077306705226255,
+    "final_target": 200.0,
+    "final_choke": 64.0,
+    "min_whp": 338.494360044027,
+    "max_whp": 1456.4924139431514,
+    "min_flp": 182.1418482621814,
+    "max_flp": 246.91265027573755,
+    "min_bhp": 1905.753029976559,
+    "max_bhp": 2968.6485467738826
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "A": {
+    "name": "Scenario A - Startup to Target",
+    "n_runs": 100,
+    "violations": 0,
+    "ramp_breaches": 0,
+    "nan_runs": 0,
+    "worst_margin_psi": 26.013407980298638,
+    "final_Q_mean": 120.99273533792314,
+    "final_Q_std": 0.18865935233594994,
+    "final_Q_min": 120.45975937946832,
+    "final_Q_max": 121.5041492824522,
+    "target": 120.0,
+    "choke_std_tail_mean": 0.0,
+    "pass": true
+  },
+  "B": {
+    "name": "Scenario B - Target Tracking",
+    "n_runs": 100,
+    "violations": 0,
+    "ramp_breaches": 0,
+    "nan_runs": 0,
+    "worst_margin_psi": 15.782967538493523,
+    "final_Q_mean": 150.56569111146345,
+    "final_Q_std": 0.4440631481636789,
+    "final_Q_min": 149.4676557023313,
+    "final_Q_max": 151.3168139041153,
+    "target": 150.0,
+    "choke_std_tail_mean": 0.0,
+    "pass": true
+  },
+  "C": {
+    "name": "Scenario C - Infeasible Target",
+    "n_runs": 100,
+    "violations": 0,
+    "ramp_breaches": 0,
+    "nan_runs": 0,
+    "worst_margin_psi": 3.209317418838509,
+    "final_Q_mean": 162.648113008272,
+    "final_Q_std": 0.18200707206470915,
+    "final_Q_min": 162.29164824458036,
+    "final_Q_max": 163.16442417927337,
+    "target": 200.0,
+    "choke_std_tail_mean": 0.17038155836204794,
+    "pass": true
+  },
+  "_meta": {
+    "n_runs_per_scenario": 100,
+    "q_max_safe_ground_truth": 164.99561449486214,
+    "u_max_safe_ground_truth": 68.64,
+    "margin_cost_bblhr": 2.347501486590147,
+    "all_pass": true
+  }
+}

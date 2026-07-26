@@ -1,0 +1,18 @@
+STEP-TEST OBSERVATIONS
+=======================
+Step 1: choke   0->20  (UP  , du=+20%)  ->  dQ= +74.8 bbl/hr  dWHP=-510.1 psi  dFLP=+29.9 psi  dBHP=-484.0 psi   gain dQ/du=+3.74
+Step 2: choke  20->25  (UP  , du=+5%)  ->  dQ= +19.6 bbl/hr  dWHP=-138.5 psi  dFLP= +7.8 psi  dBHP=-140.9 psi   gain dQ/du=+3.91
+Step 3: choke  25->30  (UP  , du=+5%)  ->  dQ= +16.7 bbl/hr  dWHP=-119.0 psi  dFLP= +6.7 psi  dBHP=-112.1 psi   gain dQ/du=+3.34
+Step 4: choke  30->40  (UP  , du=+10%)  ->  dQ= +24.7 bbl/hr  dWHP=-177.8 psi  dFLP= +9.9 psi  dBHP=-162.8 psi   gain dQ/du=+2.47
+Step 5: choke  40->35  (DOWN, du=-5%)  ->  dQ= -10.9 bbl/hr  dWHP= +78.6 psi  dFLP= -4.4 psi  dBHP= +65.8 psi   gain dQ/du=+2.18
+Step 6: choke  35->45  (UP  , du=+10%)  ->  dQ= +19.5 bbl/hr  dWHP=-141.2 psi  dFLP= +7.8 psi  dBHP=-124.1 psi   gain dQ/du=+1.95
+Step 7: choke  45->55  (UP  , du=+10%)  ->  dQ= +11.8 bbl/hr  dWHP= -86.6 psi  dFLP= +4.7 psi  dBHP= -80.1 psi   gain dQ/du=+1.18
+Step 8: choke  55->50  (DOWN, du=-5%)  ->  dQ=  -5.1 bbl/hr  dWHP= +37.4 psi  dFLP= -2.1 psi  dBHP= +30.8 psi   gain dQ/du=+1.03
+Step 9: choke  50->60  (UP  , du=+10%)  ->  dQ=  +9.1 bbl/hr  dWHP= -66.8 psi  dFLP= +3.6 psi  dBHP= -58.0 psi   gain dQ/du=+0.91
+Step 10: choke  60->65  (UP  , du=+5%)  ->  dQ=  +3.1 bbl/hr  dWHP= -23.0 psi  dFLP= +1.2 psi  dBHP= -21.8 psi   gain dQ/du=+0.62
+Step 11: choke  65->70  (UP  , du=+5%)  ->  dQ=  +2.4 bbl/hr  dWHP= -17.9 psi  dFLP= +1.0 psi  dBHP= -16.3 psi   gain dQ/du=+0.48
+Step 12: choke  70->80  (UP  , du=+10%)  ->  dQ=  +3.4 bbl/hr  dWHP= -25.4 psi  dFLP= +1.4 psi  dBHP= -22.7 psi   gain dQ/du=+0.34
+Step 13: choke  80->90  (UP  , du=+10%)  ->  dQ=  +2.2 bbl/hr  dWHP= -16.5 psi  dFLP= +0.9 psi  dBHP= -15.0 psi   gain dQ/du=+0.22
+Step 14: choke  90->100 (UP  , du=+10%)  ->  dQ=  +1.5 bbl/hr  dWHP= -11.0 psi  dFLP= +0.6 psi  dBHP= -10.1 psi   gain dQ/du=+0.15
+
+Coupling: every choke opening simultaneously RAISES Q, LOWERS WHP and BHP (more drawdown), and RAISES FLP (more flow -> more line friction). The gain dQ/du shrinks sharply as choke opens further (~3-4x higher near 20% than near 80%), confirming the process is nonlinear across its range -> motivates the gain-scheduled model in 03_identify_model.py.

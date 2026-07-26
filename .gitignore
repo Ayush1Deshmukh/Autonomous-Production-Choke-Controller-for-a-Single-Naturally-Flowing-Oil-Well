@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Local tooling state
+.claude/settings.local.json
+
+# Scratch
+/tmp/
+*.log
+
+# NOTE: data/ and figures/ ARE committed on purpose.
+# The dashboard reads dashboard/data.js, and the report embeds figures/,
+# so a fresh clone can open the demo without running the pipeline first.

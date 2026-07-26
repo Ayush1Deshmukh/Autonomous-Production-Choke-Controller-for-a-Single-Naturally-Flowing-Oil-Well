@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Autonomous Choke Controller — Live Dashboard</title>
+<link rel="stylesheet" href="style.css?v=9" />
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="app">
+
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gFace" x1="22" y1="7" x2="22" y2="37" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ffffff" stop-opacity=".98"/><stop offset="1" stop-color="#dbe6ff" stop-opacity=".82"/>
+            </linearGradient>
+            <linearGradient id="gDark" x1="22" y1="7" x2="22" y2="37" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#c9d8ff" stop-opacity=".55"/><stop offset="1" stop-color="#7ea0ff" stop-opacity=".30"/>
+            </linearGradient>
+          </defs>
+          <!-- extruded valve/diamond: right + left bevels, then lit face -->
+          <path d="M22 8 L34 22 L22 36 Z" fill="url(#gDark)"/>
+          <path d="M22 8 L10 22 L22 36 Z" fill="url(#gFace)"/>
+          <path d="M22 8 L34 22 L22 36 L10 22 Z" stroke="#ffffff" stroke-opacity=".55" stroke-width="1.1"/>
+          <!-- flow bore through the middle -->
+          <circle cx="22" cy="22" r="3.4" fill="#1e3a8a" fill-opacity=".55"/>
+          <circle cx="22" cy="22" r="1.6" fill="#ffffff" fill-opacity=".9"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Autonomous Production Choke Controller</h1>
+        <div class="sub">Brute-force MPC · single naturally flowing oil well · T<sub>s</sub> = 1 h control interval</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="status-pill" id="run-state">
+        <span class="pulse"></span><span id="run-state-text">Ready</span>
+      </div>
+      <button class="theme-btn" id="theme-btn" title="Toggle light / dark theme" aria-label="Toggle theme">
+        <svg class="ico sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="ico moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.6 6.6 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="btn-group">
+      <button class="scenario-btn" data-scenario="A"><b>A</b><span class="txt">Startup to Target</span></button>
+      <button class="scenario-btn" data-scenario="B"><b>B</b><span class="txt">Target Tracking</span></button>
+      <button class="scenario-btn" data-scenario="C"><b>C</b><span class="txt">Infeasible Target</span></button>
+      <button class="scenario-btn live" id="btn-live"><b>⚡</b><span class="txt">Live / Custom</span></button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="transport">
+      <button class="icon-btn primary" id="btn-play" title="Play / Pause (Space)">▶</button>
+      <button class="icon-btn" id="btn-reset" title="Reset run (R)">⟲</button>
+      <select class="speed" id="speed" title="Playback speed">
+        <option value="1">1×</option>
+        <option value="5" selected>5×</option>
+        <option value="instant">Instant</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="scrub-row">
+    <input type="range" id="scrubber" min="0" max="0" value="0" />
+    <div class="scrub-meta"><span id="scrub-label">0 / 0 h</span></div>
+  </div>
+
+  <div class="custom-panel" id="custom-panel">
+    <label>Target oil rate</label>
+    <input type="range" id="target-slider" min="0" max="220" step="5" value="100" />
+    <span class="val" id="target-val">100 bbl/hr</span>
+    <span class="hint">Drag at any time — the controller re-plans every step, entirely in-browser.</span>
+  </div>
+
+  <p id="scenario-desc" class="scenario-desc"></p>
+
+  <div class="status-row">
+    <div class="chip" id="chip-time">
+      <div class="label">Elapsed</div><div class="value">0<span class="u">h</span></div><div class="sub"></div>
+    </div>
+    <div class="chip accent" id="chip-q">
+      <div class="label">Oil Rate</div><div class="value">0.0<span class="u">bbl/hr</span></div><div class="sub"></div>
+    </div>
+    <div class="chip" id="chip-err">
+      <div class="label">Target Error</div><div class="value">—</div><div class="sub"></div>
+    </div>
+    <div class="chip" id="chip-choke">
+      <div class="label">Choke Position</div><div class="value">0<span class="u">%</span></div><div class="sub"></div>
+    </div>
+    <div class="chip" id="chip-margin">
+      <div class="label">Nearest Limit</div><div class="value">—</div><div class="sub"></div>
+    </div>
+    <div class="chip" id="chip-feas">
+      <div class="label">Safe Moves</div><div class="value">—</div><div class="sub"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="charts">
+      <div class="card">
+        <h3>Oil Flow Rate <span class="tag"><i class="key dash"></i>target &nbsp;<i class="key solid blue"></i>actual &nbsp;<i class="key dot"></i>MPC prediction</span></h3>
+        <canvas id="chart-q"></canvas>
+      </div>
+      <div class="card">
+        <h3>Wellhead Pressure — WHP <span class="tag">safe envelope shaded · limits dashed</span></h3>
+        <canvas id="chart-whp"></canvas>
+      </div>
+      <div class="card">
+        <h3>Flowline Pressure — FLP <span class="tag">safe envelope shaded · limits dashed</span></h3>
+        <canvas id="chart-flp"></canvas>
+      </div>
+      <div class="card">
+        <h3>Bottom Hole Pressure — BHP <span class="tag">binding constraint in Scenario C</span></h3>
+        <canvas id="chart-bhp"></canvas>
+      </div>
+      <div class="card">
+        <h3>Choke Position <span class="tag">0–100 % · ±5 %/step ramp limit</span></h3>
+        <canvas id="chart-choke"></canvas>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+
+      <div class="card schematic-card">
+        <h3>Well Schematic <span class="tag" id="flow-tag">—</span></h3>
+        <svg id="schematic" viewBox="0 0 300 372" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="rock" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+              <line x1="0" y1="0" x2="0" y2="8" class="rock-line" />
+            </pattern>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 z" class="arrow-head" />
+            </marker>
+          </defs>
+
+          <!-- surface -->
+          <line x1="0" y1="96" x2="300" y2="96" class="ground" />
+          <rect x="0" y="96" width="300" height="10" class="ground-fill" />
+
+          <!-- separator vessel -->
+          <rect x="222" y="30" width="62" height="30" rx="15" class="vessel" />
+          <text x="253" y="49" class="lbl vessel-lbl" text-anchor="middle">SEP</text>
+          <text x="253" y="72" class="lbl dim" text-anchor="middle">separator</text>
+
+          <!-- flow path: reservoir -> tubing -> wellhead -> choke -> flowline -> separator -->
+          <path id="flowpath" d="M150,318 L150,58 L150,44 L222,44" class="flow-static" />
+          <path id="flowanim" d="M150,318 L150,58 L150,44 L222,44" class="flow-anim" />
+
+          <!-- casing walls -->
+          <line x1="132" y1="96" x2="132" y2="300" class="casing" />
+          <line x1="168" y1="96" x2="168" y2="300" class="casing" />
+          <line x1="139" y1="96" x2="139" y2="318" class="tubing" />
+          <line x1="161" y1="96" x2="161" y2="318" class="tubing" />
+
+          <!-- wellhead stack -->
+          <rect x="138" y="62" width="24" height="34" rx="3" class="wellhead" />
+          <rect x="132" y="76" width="36" height="6" rx="2" class="wellhead" />
+
+          <!-- choke valve (bowtie) -->
+          <g id="choke-group">
+            <path d="M138,36 L138,52 L162,36 L162,52 Z" class="valve" />
+            <rect id="choke-fill" x="140" y="42" width="20" height="4" class="valve-open" />
+            <line x1="150" y1="30" x2="150" y2="36" class="valve-stem" />
+            <circle cx="150" cy="27" r="4" class="valve-hand" />
+          </g>
+          <text x="118" y="30" class="lbl dim" text-anchor="end">choke</text>
+          <text x="118" y="42" class="val-lbl" id="sch-choke" text-anchor="end">0 %</text>
+
+          <!-- perforations -->
+          <g class="perfs">
+            <line x1="139" y1="306" x2="126" y2="306" /><line x1="161" y1="306" x2="174" y2="306" />
+            <line x1="139" y1="312" x2="126" y2="312" /><line x1="161" y1="312" x2="174" y2="312" />
+            <line x1="139" y1="318" x2="126" y2="318" /><line x1="161" y1="318" x2="174" y2="318" />
+          </g>
+
+          <!-- reservoir -->
+          <rect x="0" y="300" width="300" height="72" class="reservoir" />
+          <rect x="0" y="300" width="300" height="72" fill="url(#rock)" opacity="0.55" />
+          <text x="14" y="342" class="lbl dim">reservoir</text>
+
+          <!-- live value callouts -->
+          <g class="callout" id="co-flp">
+            <text x="292" y="98" class="lbl dim" text-anchor="end">FLP</text>
+            <text x="292" y="112" class="val-lbl" text-anchor="end" id="sch-flp">— psi</text>
+          </g>
+          <g class="callout" id="co-whp">
+            <text x="118" y="76" class="lbl dim" text-anchor="end">WHP</text>
+            <text x="118" y="90" class="val-lbl" text-anchor="end" id="sch-whp">— psi</text>
+          </g>
+          <g class="callout" id="co-bhp">
+            <text x="286" y="288" class="lbl dim" text-anchor="end">BHP</text>
+            <text x="286" y="272" class="val-lbl" text-anchor="end" id="sch-bhp">— psi</text>
+          </g>
+          <g class="callout">
+            <text x="196" y="28" class="lbl dim">Q</text>
+            <text x="196" y="16" class="val-lbl" id="sch-q">— bbl/hr</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="card">
+        <h3>Operating Envelope</h3>
+        <div class="envelope" id="envelope"></div>
+      </div>
+
+      <div class="card reasoning">
+        <h3>MPC Reasoning — this step</h3>
+        <div class="verdict" id="verdict"></div>
+        <div class="mpc-step" id="mpc-step"></div>
+        <div class="strip-wrap">
+          <div class="strip-axis"><span id="strip-lo">—</span><span class="strip-mid">candidate choke position</span><span id="strip-hi">—</span></div>
+          <div class="candidate-strip" id="candidate-strip"></div>
+          <div class="legend">
+            <span><i class="sw g"></i>Safe</span>
+            <span><i class="sw r"></i>Rejected</span>
+            <span><i class="sw s"></i>Selected</span>
+          </div>
+        </div>
+        <h4>Rejected candidates &amp; why</h4>
+        <div class="reject-list" id="reject-list"></div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="plant.js?v=9"></script>
+<script src="controller.js?v=9"></script>
+<script src="app.js?v=9"></script>
+</body>
+</html>
